@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import OAuth from 'oauth-1.0a';
 import crypto from 'crypto';
-import fetch from 'node-fetch';
+import fetch, { Headers, HeadersInit } from 'node-fetch';
 dotenv.config();
 
 export const authenticatedFetch = async (data: any) => {
@@ -34,16 +34,18 @@ export const authenticatedFetch = async (data: any) => {
   });
 
   const authorization = oauth.authorize(requestData, token);
-  const header = oauth.toHeader(authorization) as any;
+  const header: OAuth.Header & {
+    'Content-Type'?: string;
+    'user-agent'?: string;
+  } = oauth.toHeader(authorization);
   header['Authorization'] += ', realm="' + accountID + '"';
   header['Content-Type'] = 'application/json';
   header['user-agent'] = 'SuavecitoApi/1.0 (Language=JavaScript/ES6)';
 
   try {
-    const endpoint = '';
     const response = await fetch(requestData.url, {
       method: requestData.method,
-      headers: header,
+      headers: header as any,
       body: JSON.stringify(data),
     });
 
