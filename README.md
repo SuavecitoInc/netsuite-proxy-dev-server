@@ -2,11 +2,37 @@
 
 > Example Express Server to NetSuite RestLet Endpoint
 
-This example express server exposes a post endpoint at `/product`. The expected payload is:
+This example express server exposes a post endpoint at `/product`.
+
+The expected payload is:
 
 ```javascript
 {
   "sku": "P001NN"
+}
+```
+
+The expected response is:
+
+```javascript
+{
+    "data": [
+        {
+            "recordType": "assemblyitem",
+            "id": "24867",
+            "values": {
+                "internalid": [
+                    {
+                        "value": "24867",
+                        "text": "24867"
+                    }
+                ],
+                "custitem_sp_item_sku": "P001NN",
+                "displayname": "Original Hold Pomade",
+                "upccode": "859896004001"
+            }
+        }
+    ]
 }
 ```
 
