@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "tsx watch src/index.ts",
     "build": "rm -rf ./dist && tsc --project . && copyfiles *.json ./dist",
     "start": "npm run build && node ./dist/index.js",
     "build:prod": "tsc --project . && copyfiles *.json ./dist",
@@ -29,9 +30,8 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "nodemon": "^2.0.20",
     "prettier": "^2.8.3",
-    "ts-node": "10.9.1",
+    "tsx": "^4.7.0",
     "typescript": "4.8.4"
   }
 }
