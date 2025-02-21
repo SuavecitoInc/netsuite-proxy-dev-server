@@ -4,7 +4,15 @@ import crypto from 'crypto';
 import fetch, { Headers, HeadersInit } from 'node-fetch';
 dotenv.config();
 
-export const authenticatedFetch = async (data: any) => {
+const endpoints = {
+  product: process.env.NETSUITE_RESTLET_URL, // default
+  proxy: process.env.NETSUITE_RESTLET_URL, // will update this later
+  // proxy: process.env.NETSUITE_RESTLET_PROXY_URL, // the restlet to proxy the request
+};
+
+type Endpoint = keyof typeof endpoints;
+
+export const authenticatedFetch = async (endpoint: Endpoint, data: any) => {
   // production
   const accountID = process.env.NETSUITE_ACCT_ID;
   const token = {
@@ -17,7 +25,7 @@ export const authenticatedFetch = async (data: any) => {
   };
 
   const requestData = {
-    url: process.env.NETSUITE_RESTLET_URL,
+    url: endpoints[endpoint],
     method: 'POST',
   };
 
@@ -40,7 +48,7 @@ export const authenticatedFetch = async (data: any) => {
   } = oauth.toHeader(authorization);
   header['Authorization'] += ', realm="' + accountID + '"';
   header['Content-Type'] = 'application/json';
-  header['user-agent'] = 'SuavecitoApi/1.0 (Language=JavaScript/ES6)';
+  header['user-agent'] = 'SuavecitoDevApi/1.0 (Language=JavaScript/Node)';
 
   try {
     const response = await fetch(requestData.url, {
