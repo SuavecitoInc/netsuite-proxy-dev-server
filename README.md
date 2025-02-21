@@ -1,8 +1,10 @@
-# NetSuite RestLET Endpoint
+# NetSuite RESTLet Development Server
 
-> Example Express Server to NetSuite RestLet Endpoint
+> A development Server to proxy requests to NetSuite RESTLets
 
-This example express server exposes a post endpoint at `/product`.
+## Development
+
+This express server exposes an example post endpoint at `/product`.
 
 The expected payload is:
 
@@ -38,6 +40,19 @@ The expected response is:
 
 The response will be NetSuite product data.
 
+## Test Other RESTLets
+
+To proxy requests to RESETLets for development, please add the RESETlet url in the .env as `NETSUITE_RESTLET_PROXY_URL`. Also update the endpoints object at `/src/lib/utils`.
+
+```typescript
+const endpoints = {
+  product: process.env.NETSUITE_RESTLET_URL, // default
+  proxy: process.env.NETSUITE_RESTLET_PROXY_URL, // the restlet to proxy the request
+};
+```
+
+The response will be w/e the RESTLet returns.
+
 ## Setup
 
 .env
@@ -50,7 +65,8 @@ NETSUITE_CONSUMER_SECRET="Suavecito API - Web Services Consumer Secret"
 NETSUITE_ACCESS_TOKEN="Suavecito API - Web Services Access Token"
 NETSUITE_TOKEN_SECRET="Suavecito API - Web Services Token Secret"
 # restlets
-NETSUITE_RESTLET_URL="ResLET URL"
+NETSUITE_RESTLET_URL="RESTLet URL"
+NETSUITE_RESTLET_PROXY_URL="RESTLet URL"
 
 ```
 
