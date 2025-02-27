@@ -8,6 +8,7 @@ declare global {
       NETSUITE_ACCT_ID: string;
       NETSUITE_RESTLET_URL: string;
       NETSUITE_RESTLET_PROXY_URL: string;
+      [key: string]: string; // catch all
     }
   }
 }
