@@ -42,12 +42,21 @@ The response will be NetSuite product data.
 
 ## Test Other RESTLets
 
-To proxy requests to RESETLets for development, please add the RESETlet url in the .env as `NETSUITE_RESTLET_PROXY_URL`. Also update the endpoints object at `/src/lib/utils`.
+To test / add other RESTLet endpoints simply add the url as an env var and update the endpoint on the `proxyRequest` controller or add another route and controller.
 
 ```typescript
-const endpoints = {
-  product: process.env.NETSUITE_RESTLET_URL, // default
-  proxy: process.env.NETSUITE_RESTLET_PROXY_URL, // the restlet to proxy the request
+export const proxyRequest = async (req: Request, res: Response) => {
+  try {
+    const endpoint = process.env.NETSUITE_RESTLET_PROXY_URL;
+    const body = req.body;
+    console.log('PROXY REQUEST PAYLOAD', body);
+    const response = await authenticatedFetch(endpoint, body);
+    console.log('RESPONSE', response);
+    res.status(200).json(response);
+  } catch (err: any) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
 };
 ```
 
@@ -67,6 +76,8 @@ NETSUITE_TOKEN_SECRET="Suavecito API - Web Services Token Secret"
 # restlets
 NETSUITE_RESTLET_URL="RESTLet URL"
 NETSUITE_RESTLET_PROXY_URL="RESTLet URL"
+# other reestlet urls
+....
 
 ```
 
