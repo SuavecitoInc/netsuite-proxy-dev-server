@@ -1,18 +1,10 @@
 import dotenv from 'dotenv';
 import OAuth from 'oauth-1.0a';
 import crypto from 'crypto';
-import fetch, { Headers, HeadersInit } from 'node-fetch';
+import fetch from 'node-fetch';
 dotenv.config();
 
-const endpoints = {
-  product: process.env.NETSUITE_RESTLET_URL, // default
-  proxy: process.env.NETSUITE_RESTLET_URL, // will update this later
-  // proxy: process.env.NETSUITE_RESTLET_PROXY_URL, // the restlet to proxy the request
-};
-
-type Endpoint = keyof typeof endpoints;
-
-export const authenticatedFetch = async (endpoint: Endpoint, data: any) => {
+export const authenticatedFetch = async (endpoint: string, data?: any) => {
   // production
   const accountID = process.env.NETSUITE_ACCT_ID;
   const token = {
@@ -25,8 +17,8 @@ export const authenticatedFetch = async (endpoint: Endpoint, data: any) => {
   };
 
   const requestData = {
-    url: endpoints[endpoint],
-    method: 'POST',
+    url: endpoint,
+    method: data ? 'POST' : 'GET',
   };
 
   const oauth = new OAuth({
@@ -53,8 +45,8 @@ export const authenticatedFetch = async (endpoint: Endpoint, data: any) => {
   try {
     const response = await fetch(requestData.url, {
       method: requestData.method,
-      headers: header as any,
-      body: JSON.stringify(data),
+      headers: { ...header },
+      body: data ? JSON.stringify(data) : undefined,
     });
 
     const json = await response.json();
