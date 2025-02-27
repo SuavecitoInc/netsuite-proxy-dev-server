@@ -1,5 +1,11 @@
 import type { Express } from 'express';
-import { getProductBySku, proxyRequest } from '../controllers/index.js';
+import {
+  getProductBySku,
+  proxyRequest,
+  demandPlansAll,
+  demandPlansByDate,
+  demandPlansBySku,
+} from '../controllers/index.js';
 
 const routes = (app: Express) => {
   // verify request function should be here
@@ -11,6 +17,11 @@ const routes = (app: Express) => {
   app.post('/product', getProductBySku);
 
   app.post('/proxy', proxyRequest);
+
+  // demand planning endpoints
+  app.post('/demand-plans', demandPlansAll);
+  app.post('/demand-plans/sku', demandPlansBySku);
+  app.post('/demand-plans/date', demandPlansByDate);
 };
 
 export default routes;
