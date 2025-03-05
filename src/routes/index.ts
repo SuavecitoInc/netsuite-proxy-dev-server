@@ -5,6 +5,7 @@ import {
   demandPlansAll,
   demandPlansByDate,
   demandPlansBySku,
+  demandPlansWorkOrders,
 } from '../controllers/index.js';
 
 const routes = (app: Express) => {
@@ -22,6 +23,7 @@ const routes = (app: Express) => {
   app.post('/demand-plans', demandPlansAll);
   app.post('/demand-plans/sku', demandPlansBySku);
   app.post('/demand-plans/date', demandPlansByDate);
+  app.post('/demand-plans/work-orders', demandPlansWorkOrders);
 };
 
 export default routes;

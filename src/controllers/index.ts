@@ -76,3 +76,17 @@ export const demandPlansAll = async (req: Request, res: Response) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+export const demandPlansWorkOrders = async (req: Request, res: Response) => {
+  try {
+    const endpoint = process.env.NETSUITE_DEMAND_PLANNING_WO;
+    const body = req.body;
+    console.log('PROXY REQUEST PAYLOAD', body);
+    const response = await authenticatedFetch(endpoint, body);
+    console.log('RESPONSE', response);
+    res.status(200).json(response);
+  } catch (err: any) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
+};
