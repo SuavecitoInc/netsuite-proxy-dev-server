@@ -4,6 +4,20 @@ import { authenticatedFetch } from '../lib/utils.js';
 
 dotenv.config();
 
+export const proxyRequest = async (req: Request, res: Response) => {
+  try {
+    const endpoint = process.env.NETSUITE_RESTLET_PROXY_URL;
+    const body = req.body;
+    console.log('PROXY REQUEST PAYLOAD', body);
+    const response = await authenticatedFetch(endpoint, body);
+    console.log('RESPONSE', response);
+    res.status(200).json(response);
+  } catch (err: any) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
 export const getProductBySku = async (req: Request, res: Response) => {
   try {
     const endpoint = process.env.NETSUITE_RESTLET_URL;
@@ -13,20 +27,6 @@ export const getProductBySku = async (req: Request, res: Response) => {
       sku,
     };
     const response = await authenticatedFetch(endpoint, data);
-    console.log('RESPONSE', response);
-    res.status(200).json(response);
-  } catch (err: any) {
-    console.log(err);
-    res.status(500).json({ error: err.message });
-  }
-};
-
-export const proxyRequest = async (req: Request, res: Response) => {
-  try {
-    const endpoint = process.env.NETSUITE_RESTLET_PROXY_URL;
-    const body = req.body;
-    console.log('PROXY REQUEST PAYLOAD', body);
-    const response = await authenticatedFetch(endpoint, body);
     console.log('RESPONSE', response);
     res.status(200).json(response);
   } catch (err: any) {
@@ -79,7 +79,26 @@ export const demandPlansAll = async (req: Request, res: Response) => {
 
 export const demandPlansWorkOrders = async (req: Request, res: Response) => {
   try {
+    console.log('DEMAND PLANS WORK ORDERS PAYLOAD', req.body);
     const endpoint = process.env.NETSUITE_DEMAND_PLANNING_WO;
+    const body = req.body;
+    console.log('PROXY REQUEST PAYLOAD', body);
+    const response = await authenticatedFetch(endpoint, body);
+    console.log('RESPONSE', response);
+    res.status(200).json(response);
+  } catch (err: any) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const demandPlansWorkOrdersCompleted = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    console.log('DEMAND PLANS WORK ORDERS COMPLETED PAYLOAD', req.body);
+    const endpoint = process.env.NETSUITE_DEMAND_PLANNING_WO_COMP;
     const body = req.body;
     console.log('PROXY REQUEST PAYLOAD', body);
     const response = await authenticatedFetch(endpoint, body);
