@@ -17,6 +17,7 @@ const routes = (app: Express) => {
   // example endpoint
   app.post('/product', getProductBySku);
 
+  // for testing random endpoints where we just need the response back from netsuite
   app.post('/proxy', proxyRequest);
 
   // demand planning endpoints

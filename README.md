@@ -75,6 +75,7 @@ NETSUITE_ACCESS_TOKEN="Suavecito API - Web Services Access Token"
 NETSUITE_TOKEN_SECRET="Suavecito API - Web Services Token Secret"
 # restlets
 NETSUITE_RESTLET_URL="RESTLet URL"
+# NetSuite Proxy Request to RESTLet for testing random endpoints where we just need the response back from NetSuite
 NETSUITE_RESTLET_PROXY_URL="RESTLet URL"
 # other reestlet urls
 ....
